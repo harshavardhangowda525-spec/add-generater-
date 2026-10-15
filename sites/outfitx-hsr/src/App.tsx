@@ -14,7 +14,7 @@ export function App() {
   return (
     // reducedMotion="user" turns transform animations off for visitors who ask for less motion.
     <MotionConfig reducedMotion="user">
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
         <EnquiryPrefillProvider>
           <ScrollManager />
           <Nav />

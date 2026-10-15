@@ -98,8 +98,11 @@ export type SiteImage = {
   height: number;
 };
 
+/** Prefixes a public/ path with the deploy base, so images work under a subpath (e.g. GitHub Pages). */
+export const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+
 const demo = (src: string, alt: string, width: number, height: number): SiteImage => ({
-  src,
+  src: asset(src),
   alt,
   isRealFacility: false,
   width,

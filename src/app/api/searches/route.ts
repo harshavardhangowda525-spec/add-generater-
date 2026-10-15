@@ -19,6 +19,7 @@ const body = z
     instagramFilter: z.enum(["any", "has", "none"]).default("any"),
     minQuality: z.coerce.number().int().min(0).max(100).optional(),
     checkWebsites: z.boolean().default(false),
+    reachKm: z.coerce.number().int().min(0).max(100).default(0),
     providers: z.array(z.string()).optional(),
   })
   .refine((b) => b.niche !== "custom" || !!b.customNiche, { message: "Enter a custom niche", path: ["customNiche"] })

@@ -26,7 +26,7 @@ export type RawBusiness = {
 
 export type SearchPageInput = {
   niche: Niche & { custom: boolean };
-  tile: { label: string; bbox: BBox };
+  tile: { label: string; bbox: BBox; ring?: boolean };
   params: SearchParams;
   page: string | null;
   phoneRequired: boolean;

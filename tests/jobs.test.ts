@@ -87,7 +87,23 @@ describe("search job pipeline", () => {
     expect((await db.select().from(leadSources)).length).toBeGreaterThan(total);
   });
 
-  it("follows Google Places pagination tokens across pages", async () => {
+  it("search reach continues into the area around the city after the city is covered", async () => {
+    vi.stubGlobal("fetch", mockFetch({}).fn);
+    const cityOnly = await runToEnd((await createJob(userId, { ...baseParams, target: 1000 })).id);
+    expect(cityOnly.status).toBe("exhausted");
+    expect(cityOnly.foundCount).toBe(144); // 16 city areas × 9 eligible
+
+    vi.stubGlobal("fetch", mockFetch({}).fn);
+    const wider = await runToEnd((await createJob(userId, { ...baseParams, target: 1000, reachKm: 25 })).id);
+    const tiles = wider.cursor!.tiles;
+    expect(tiles.filter((t) => !t.ring)).toHaveLength(16);
+    expect(tiles.filter((t) => t.ring).length).toBeGreaterThan(0);
+    expect(tiles.findIndex((t) => t.ring)).toBe(16); // city first, then the surroundings
+    expect(wider.foundCount).toBeGreaterThan(0); // new businesses beyond the city
+    expect(wider.log.some((l) => /Search reach extended 25 km/.test(l.message))).toBe(true);
+  });
+
+    it("follows Google Places pagination tokens across pages", async () => {
     process.env.OSM_ENABLED = "false";
     process.env.GOOGLE_PLACES_API_KEY = "test-key";
     let n = 0;

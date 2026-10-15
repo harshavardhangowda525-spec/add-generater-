@@ -21,7 +21,7 @@ export async function createJob(userId: string, params: SearchParams) {
 export function describe(p: SearchParams) {
   const niche = p.niche === "custom" ? p.customNiche : p.niche;
   const where = [p.area, p.city, p.state, p.country].filter(Boolean).join(", ");
-  return `${p.target} × ${niche} in ${where}`;
+  return `${p.target} × ${niche} in ${where}${p.reachKm ? ` (+${p.reachKm} km around)` : ""}`;
 }
 
 function entry(level: JobLogEntry["level"], message: string): JobLogEntry {

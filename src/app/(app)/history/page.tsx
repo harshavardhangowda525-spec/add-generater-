@@ -57,6 +57,7 @@ export default function HistoryPage() {
                     Website: {p.websiteFilter === "none" ? "none only" : p.websiteFilter} · Instagram: {p.instagramFilter}
                     {p.minQuality ? ` · quality ≥ ${p.minQuality}` : ""}
                     {p.checkWebsites ? " · sites checked" : ""}
+                    {p.reachKm ? ` · +${p.reachKm} km around` : ""}
                   </td>
                   <td className="px-4 py-3 text-right tabular-nums"><strong>{j.foundCount}</strong> / {j.target}</td>
                   <td className="px-4 py-3"><span className={`badge ${ui.cls}`} title={j.stopReason ?? undefined}>{ui.label}</span></td>

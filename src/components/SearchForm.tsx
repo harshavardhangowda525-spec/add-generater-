@@ -16,6 +16,7 @@ export type SearchFormValues = {
   instagramFilter: "any" | "has" | "none";
   minQuality: string;
   checkWebsites: boolean;
+  reachKm: string;
 };
 
 const DEFAULTS: SearchFormValues = {
@@ -30,6 +31,7 @@ const DEFAULTS: SearchFormValues = {
   instagramFilter: "any",
   minQuality: "",
   checkWebsites: false,
+  reachKm: "0",
 };
 
 /** Vertical "Search & Filters" panel. `children` renders under the button (live progress). */
@@ -54,6 +56,16 @@ export function SearchForm({ meta, busy, searching, onSubmit, children }: { meta
       <Field label="State" id="state"><input id="state" className="input" value={v.state} onChange={(e) => set("state", e.target.value)} /></Field>
       <Field label="City" id="city"><input id="city" className="input" value={v.city} onChange={(e) => set("city", e.target.value)} required /></Field>
       <Field label="Area / locality (optional)" id="area"><input id="area" className="input" placeholder="e.g. HSR Layout" value={v.area} onChange={(e) => set("area", e.target.value)} /></Field>
+
+      <Field label="Search reach" id="reachKm">
+        <select id="reachKm" className="input" value={v.reachKm} onChange={(e) => set("reachKm", e.target.value)}>
+          <option value="0">City only</option>
+          <option value="10">City + 10 km around</option>
+          <option value="25">City + 25 km around</option>
+          <option value="50">City + 50 km around</option>
+        </select>
+        {v.reachKm !== "0" && <p className="mt-1 text-[11px] text-slate-500">The city is searched first, then the surrounding area until your target is reached.</p>}
+      </Field>
 
       <Field label="Business Niche" id="niche">
         <select id="niche" className="input" value={v.niche} onChange={(e) => set("niche", e.target.value)}>

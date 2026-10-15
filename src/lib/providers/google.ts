@@ -69,7 +69,8 @@ export const googleProvider: Provider = {
   attribution: "Data © Google",
   isConfigured: () => !!process.env.GOOGLE_PLACES_API_KEY,
   async searchPage({ niche, tile, params, page }) {
-    const where = [params.area, params.city, params.state, params.country].filter(Boolean).join(", ");
+    // Areas around the city aren't "in <city>"; name only the state there.
+    const where = (tile.ring ? [params.state, params.country] : [params.area, params.city, params.state, params.country]).filter(Boolean).join(", ");
     const body: Record<string, unknown> = {
       textQuery: `${niche.google.query} in ${where}`,
       pageSize: 20,

@@ -19,7 +19,7 @@ export function JobProgress({ job, onAction, stepError }: { job: JobDTO; onActio
   const ui = JOB_STATUS_UI[job.status];
   const areas = job.cursor?.tiles.length ?? 0;
   const p = job.params;
-  const where = [p.area, p.city, p.state].filter(Boolean).join(", ");
+  const where = [p.area, p.city, p.state].filter(Boolean).join(", ") + (p.reachKm ? ` (+${p.reachKm} km around)` : "");
   const niche = p.niche === "custom" ? p.customNiche : p.niche.replace(/_/g, " ");
   const recent = [...job.log].reverse().slice(0, 8);
 
@@ -122,7 +122,7 @@ export function JobMini({ job, onAction }: { job: JobDTO; onAction: (a: "pause" 
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
         <div className={`h-full rounded-full transition-all ${job.status === "completed" ? "bg-emerald-400" : "bg-gradient-to-r from-brand to-glow"}`} style={{ width: `${pct}%` }} />
       </div>
-      <p className="mt-2 truncate capitalize text-slate-400">{p.niche === "custom" ? p.customNiche : p.niche.replace(/_/g, " ")} · {[p.area, p.city].filter(Boolean).join(", ")}</p>
+      <p className="mt-2 truncate capitalize text-slate-400">{p.niche === "custom" ? p.customNiche : p.niche.replace(/_/g, " ")} · {[p.area, p.city].filter(Boolean).join(", ")}{p.reachKm ? ` +${p.reachKm} km` : ""}</p>
       {job.status === "running" ? (
         <p className="mt-1 line-clamp-2 text-slate-400">{last?.message ?? "Connecting to provider…"}</p>
       ) : (

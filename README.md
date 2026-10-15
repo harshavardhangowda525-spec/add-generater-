@@ -67,6 +67,7 @@ API keys are only read on the server. The browser only ever learns whether each 
 1. **Plan.** The city (and the locality, if you give one) is geocoded through Geoapify, then Google, then Nominatim,
    falling back down that list if one fails. The area is split into a grid, searched centre first; the locality is
    searched before the rest of the city.
+   With **Search reach** set (+10 / +25 / +50 km), the band around the city is gridded too and searched after the city, so a search keeps finding businesses once the city is used up.
 2. **Fetch.** For each provider and area, the job pages through results:
    - Google: `nextPageToken`, up to 60 results per query, which is why the city is split into areas.
    - Geoapify: `offset`.

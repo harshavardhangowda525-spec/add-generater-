@@ -77,6 +77,7 @@ export type SearchParams = {
   instagramFilter: "any" | "has" | "none";
   minQuality?: number;
   checkWebsites: boolean;
+  reachKm?: number; // extra km searched around the city after the city itself
   providers?: string[]; // restrict to these providers; default = all configured
 };
 
@@ -90,7 +91,7 @@ export type ProviderCursor = {
 };
 
 export type JobCursor = {
-  tiles: { label: string; bbox: BBox }[];
+  tiles: { label: string; bbox: BBox; ring?: boolean }[]; // ring = outside the city (search reach)
   providers: Record<string, ProviderCursor>;
   providerOrder: string[];
 };

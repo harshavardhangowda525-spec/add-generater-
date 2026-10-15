@@ -68,6 +68,7 @@ export default function DashboardPage() {
           instagramFilter: v.instagramFilter,
           minQuality: v.minQuality ? Number(v.minQuality) : undefined,
           checkWebsites: v.checkWebsites,
+          reachKm: Number(v.reachKm),
         },
       });
       setInitialJob(job);

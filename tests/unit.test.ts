@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { leadsToCsv, parseImportCsv } from "@/lib/csv";
 import type { Lead } from "@/lib/db/schema";
-import { splitBBox } from "@/lib/geocode";
+import { ringTiles, splitBBox } from "@/lib/geocode";
 import { nameKey } from "@/lib/names";
 import { resolveNiche } from "@/lib/niches";
 import { normalizePhone } from "@/lib/phone";
@@ -87,7 +87,25 @@ describe("providers", () => {
     const b = mapGooglePlace({ id: "x", displayName: { text: "A" }, businessStatus: "CLOSED_PERMANENTLY" });
     expect(b?.operational).toBe(false);
   });
-  it("splits a city into an n×n grid, centre first", () => {
+  it("search reach: ring tiles lie around the city, not inside it, and stay bounded", () => {
+    const city = { south: 12.834, north: 13.144, west: 77.46, east: 77.784 }; // Bengaluru, ~34 km
+    expect(ringTiles(city, 4, 0)).toEqual([]);
+    for (const km of [10, 25, 50]) {
+      const ring = ringTiles(city, 4, km);
+      expect(ring.length).toBeGreaterThan(0);
+      expect(ring.length).toBeLessThanOrEqual(100);
+      for (const t of ring) {
+        const cLat = (t.north + t.south) / 2;
+        const cLon = (t.east + t.west) / 2;
+        const inside = cLat > city.south && cLat < city.north && cLon > city.west && cLon < city.east;
+        expect(inside).toBe(false);
+      }
+      // reaches km beyond the city on every side
+      const south = Math.min(...ring.map((t) => t.south));
+      expect(city.south - south).toBeCloseTo(km / 111, 3);
+    }
+  });
+    it("splits a city into an n×n grid, centre first", () => {
     const tiles = splitBBox({ south: 0, west: 0, north: 3, east: 3 }, 3);
     expect(tiles).toHaveLength(9);
     expect(tiles[0]).toEqual({ south: 1, north: 2, west: 1, east: 2 });

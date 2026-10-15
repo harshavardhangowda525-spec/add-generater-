@@ -118,11 +118,31 @@ function dist(t: BBox, lat: number, lon: number) {
 }
 const round = (x: number) => Math.round(x * 1e6) / 1e6;
 
-/** Area first (if given), then the whole city split into a grid. */
-export async function planTiles(params: { country: string; state: string; city: string; area?: string }) {
+/**
+ * Tiles for the band around a city: the city box grown by `km` on every side,
+ * gridded at roughly the city's cell size, keeping only cells centred outside
+ * the city (already searched). Capped so a large reach stays a sane number of requests.
+ */
+export function ringTiles(city: BBox, cityGrid: number, km: number, maxSide = 10): BBox[] {
+  if (km <= 0) return [];
+  const midLat = (city.north + city.south) / 2;
+  const dLat = km / 111;
+  const dLon = km / (111 * Math.cos((midLat * Math.PI) / 180));
+  const outer: BBox = { south: city.south - dLat, north: city.north + dLat, west: city.west - dLon, east: city.east + dLon };
+  const cellKm = areaKm(city) / cityGrid;
+  const side = Math.min(maxSide, Math.max(3, Math.ceil(areaKm(outer) / Math.max(cellKm, 1))));
+  return splitBBox(outer, side).filter((t) => {
+    const cLat = (t.north + t.south) / 2;
+    const cLon = (t.east + t.west) / 2;
+    return !(cLat > city.south && cLat < city.north && cLon > city.west && cLon < city.east);
+  });
+}
+
+/** Area first (if given), then the whole city split into a grid, then (optionally) the surroundings. */
+export async function planTiles(params: { country: string; state: string; city: string; area?: string; reachKm?: number }) {
   const grid = Math.max(1, Math.min(10, Number(process.env.SEARCH_GRID_SIZE) || 4));
   const cityQuery = [params.city, params.state, params.country].filter(Boolean).join(", ");
-  const tiles: { label: string; bbox: BBox }[] = [];
+  const tiles: { label: string; bbox: BBox; ring?: boolean }[] = [];
   const notes: string[] = [];
 
   if (params.area?.trim()) {
@@ -146,6 +166,13 @@ export async function planTiles(params: { country: string; state: string; city: 
   }
   notes.push(`City "${params.city}" located via ${city.source}; split into ${grid}×${grid} search areas.`);
   splitBBox(city.bbox, grid).forEach((bbox, i) => tiles.push({ label: `${params.city} area ${i + 1}/${grid * grid}`, bbox }));
+
+  const reach = Math.max(0, Math.min(100, params.reachKm ?? 0));
+  if (reach > 0) {
+    const ring = ringTiles(city.bbox, grid, reach);
+    ring.forEach((bbox, i) => tiles.push({ label: `Around ${params.city} (+${reach} km) area ${i + 1}/${ring.length}`, bbox, ring: true }));
+    notes.push(`Search reach extended ${reach} km beyond ${params.city}: ${ring.length} more areas, searched after the city.`);
+  }
   return { tiles, notes };
 }
 

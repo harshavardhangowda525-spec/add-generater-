@@ -45,12 +45,13 @@ npm run worker                  # optional: keeps searches running with no brows
 
 | Variable | Required | What it is / where to get it |
 |---|---|---|
-| `DATABASE_URL` | **Yes** | PostgreSQL 14+ connection string. **Supabase:** Project Settings → Database → Connection string (session pooler or direct, *not* the transaction pooler). Any other Postgres host works as well. |
+| `DATABASE_URL` | **Yes** | PostgreSQL 14+ connection string. **Supabase on Vercel:** click **Connect** → **Transaction pooler** (port 6543); the session pooler allows only ~15 clients in total, which serverless instances exhaust quickly. On an always-on server, the session pooler or a direct connection also works. Any other Postgres host works as well. |
 | `OSM_ENABLED` | No (default `true`) | OpenStreetMap through Overpass. Free, no key. Phone coverage for Indian businesses is **patchy**, so expect fewer leads per search than with Google. |
 | `OSM_CONTACT_EMAIL` | Recommended | Added to the User-Agent header, as the OSM/Nominatim usage policies ask. |
 | `OVERPASS_URL`, `NOMINATIM_URL` | No | Point these at other Overpass/Nominatim instances (for example your own) for heavy use. |
 | `GOOGLE_PLACES_API_KEY` | Optional | Google Cloud Console → enable **Places API (New)** → create an API key, restricted to that API. Has the best phone and website coverage. **Billed:** asking for phone and website fields uses the higher-priced Text Search tier. |
 | `GEOAPIFY_API_KEY` | Optional | Sign up at https://myprojects.geoapify.com → create a project → copy the API key. The free tier is 3,000 credits a day. |
+| `DB_POOL_MAX` | No | Database connections per app instance. Defaults to 1 on Vercel (serverless) and 10 elsewhere. |
 | `SEARCH_GRID_SIZE` | No (default 4) | The city is split into N×N areas. Raise it for big cities or large targets. |
 | `JOB_STEP_SECONDS` | No (default 20) | How many seconds of work each job step does. |
 

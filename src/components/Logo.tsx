@@ -1,14 +1,21 @@
-export function Logo({ light = false }: { light?: boolean }) {
+export function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <svg viewBox="0 0 64 64" className="h-8 w-8 shrink-0" aria-hidden>
-        <rect width="64" height="64" rx="14" fill={light ? "#ffffff" : "#0A2540"} />
-        <path d="M20 32c0-5 4-9 8.5-9 7 0 9.5 18 16.5 18 4.5 0 7-4 7-9s-2.5-9-7-9c-7 0-9.5 18-16.5 18C24 41 20 37 20 32z" fill="none" stroke="#2563EB" strokeWidth="5" strokeLinecap="round" />
+    <div className="flex items-center gap-2">
+      <svg viewBox="0 0 48 24" className="h-7 w-14 shrink-0 drop-shadow-[0_0_6px_rgba(56,189,248,0.6)]" aria-hidden>
+        <defs>
+          <linearGradient id="inf" x1="0" x2="1">
+            <stop offset="0" stopColor="#60A5FA" />
+            <stop offset="1" stopColor="#38BDF8" />
+          </linearGradient>
+        </defs>
+        <path d="M6 12c0-3.6 2.8-6 6-6 6 0 10 12 18 12 3.4 0 6-2.6 6-6s-2.6-6-6-6c-8 0-12 12-18 12-3.2 0-6-2.4-6-6z" fill="none" stroke="url(#inf)" strokeWidth="3.2" strokeLinecap="round" />
       </svg>
-      <div className="leading-tight">
-        <div className={`text-sm font-bold ${light ? "text-white" : "text-navy"}`}>Infinity Lead Finder</div>
-        <div className={`text-[11px] ${light ? "text-blue-200" : "text-slate-500"}`}>Infinity Web &amp; Apps</div>
-      </div>
+      {!compact && (
+        <div className="leading-none">
+          <div className="text-base font-bold text-white">Infinity</div>
+          <div className="mt-0.5 text-[10px] text-slate-400">Web &amp; Apps</div>
+        </div>
+      )}
     </div>
   );
 }

@@ -27,26 +27,26 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col lg:flex-row">
-      <section className="flex flex-col justify-between bg-navy px-6 py-8 text-white lg:w-[44%] lg:px-12 lg:py-12">
-        <Logo light />
+      <section className="flex flex-col justify-between border-b border-sky-400/15 bg-ink-900/70 px-6 py-8 text-white backdrop-blur lg:w-[44%] lg:border-b-0 lg:border-r lg:px-12 lg:py-12">
+        <Logo />
         <div className="my-10 max-w-md lg:my-0">
           <h1 className="text-2xl font-bold leading-tight sm:text-3xl">Find local businesses that need a website — with real phone numbers.</h1>
-          <p className="mt-4 text-sm text-blue-100">
+          <p className="mt-4 text-sm text-slate-300">
             Search real provider data by city, locality and niche. Keep only businesses with no listed website and a public phone
             number, then track every call in your CRM.
           </p>
-          <ul className="mt-6 space-y-2 text-sm text-blue-100">
+          <ul className="mt-6 space-y-2 text-sm text-slate-300">
             <li>✓ Real data from Google Places, Geoapify and OpenStreetMap</li>
             <li>✓ Evidence-based website status — never guessed</li>
             <li>✓ Duplicate-free, persistent lead database</li>
           </ul>
         </div>
-        <p className="hidden text-xs text-blue-300 lg:block">© {new Date().getFullYear()} Infinity Web &amp; Apps</p>
+        <p className="hidden text-xs text-slate-500 lg:block">© {new Date().getFullYear()} Infinity Web &amp; Apps</p>
       </section>
       <section className="flex flex-1 items-center justify-center px-4 py-10">
         <form onSubmit={submit} className="card w-full max-w-sm p-6">
-          <h2 className="text-lg font-bold text-navy">{mode === "login" ? "Sign in" : "Create your account"}</h2>
-          <p className="mb-5 mt-1 text-sm text-slate-500">
+          <h2 className="text-lg font-bold text-white">{mode === "login" ? "Sign in" : "Create your account"}</h2>
+          <p className="mb-5 mt-1 text-sm text-slate-400">
             {mode === "login" ? "Welcome back. Your leads are waiting." : "Your leads are private to your account."}
           </p>
           {mode === "signup" && (
@@ -63,9 +63,9 @@ export default function LoginPage() {
             <label className="label" htmlFor="password">Password</label>
             <input id="password" type="password" required minLength={mode === "signup" ? 8 : 1} className="input" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "login" ? "current-password" : "new-password"} />
           </div>
-          {error && <p role="alert" className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+          {error && <p role="alert" className="mb-3 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-200">{error}</p>}
           <button className="btn-primary w-full" disabled={busy}>{busy ? "Please wait…" : mode === "login" ? "Sign in" : "Create account"}</button>
-          <button type="button" className="mt-3 w-full text-center text-sm text-brand hover:underline" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(null); }}>
+          <button type="button" className="mt-3 w-full text-center text-sm text-sky-300 hover:underline" onClick={() => { setMode(mode === "login" ? "signup" : "login"); setError(null); }}>
             {mode === "login" ? "New here? Create an account" : "Already have an account? Sign in"}
           </button>
         </form>

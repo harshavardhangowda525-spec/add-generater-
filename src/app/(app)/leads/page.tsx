@@ -178,14 +178,14 @@ function LeadsPageInner() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold text-navy sm:text-2xl">Leads CRM</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-xl font-bold text-white sm:text-2xl">Leads CRM</h1>
+          <p className="text-sm text-slate-400">
             {loading ? "Loading…" : `${total.toLocaleString("en-IN")} leads match`}
             {isPrimary && " · primary list: phone number + no listed website"}
             {filters.jobId && (
               <>
                 {" · from one search "}
-                <button className="text-brand hover:underline" onClick={() => update({ jobId: "" })}>show all</button>
+                <button className="text-sky-300 hover:underline" onClick={() => update({ jobId: "" })}>show all</button>
               </>
             )}
           </p>
@@ -217,25 +217,25 @@ function LeadsPageInner() {
 
       {/* Bulk bar */}
       {selected.size > 0 && (
-        <div className="sticky top-[60px] z-20 flex flex-wrap items-center gap-2 rounded-xl bg-navy px-4 py-2.5 text-sm text-white shadow-lg">
+        <div className="sticky top-[60px] z-20 flex flex-wrap items-center gap-2 rounded-xl bg-ink-700 px-4 py-2.5 text-sm text-white shadow-lg">
           <span className="font-semibold">{selected.size} selected</span>
           <a className="rounded-lg bg-white/10 px-3 py-1.5 hover:bg-white/20" href={exportUrl("selected")}>Export selected</a>
           <button className="rounded-lg bg-white/10 px-3 py-1.5 hover:bg-white/20" onClick={copySelectedPhones}>Copy phone numbers</button>
           <select className="rounded-lg border-0 bg-white/10 py-1.5 text-sm text-white" value="" onChange={(e) => e.target.value && bulk("status", e.target.value)} aria-label="Set status for selected">
-            <option value="" className="text-slate-900">Set status…</option>
-            {Object.entries(LEAD_STATUS_LABELS).map(([k, l]) => <option key={k} value={k} className="text-slate-900">{l}</option>)}
+            <option value="" className="text-slate-100">Set status…</option>
+            {Object.entries(LEAD_STATUS_LABELS).map(([k, l]) => <option key={k} value={k} className="text-slate-100">{l}</option>)}
           </select>
-          <button className="rounded-lg px-3 py-1.5 text-red-200 hover:bg-white/10" onClick={() => bulk("delete")}>Delete</button>
+          <button className="rounded-lg px-3 py-1.5 text-red-300 hover:bg-white/10" onClick={() => bulk("delete")}>Delete</button>
           <button className="ml-auto rounded-lg px-3 py-1.5 hover:bg-white/10" onClick={() => setSelected(new Set())}>Clear</button>
         </div>
       )}
 
-      {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">{error} <button className="ml-2 underline" onClick={load}>Retry</button></div>}
+      {error && <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">{error} <button className="ml-2 underline" onClick={load}>Retry</button></div>}
 
       {/* Desktop table */}
       <div className="card hidden overflow-x-auto lg:block">
         <table className="w-full text-left text-[13px]">
-          <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="border-b border-sky-400/15 bg-white/[0.03] text-xs uppercase tracking-wide text-slate-400">
             <tr>
               <th className="w-8 py-3 pl-3 pr-1">
                 <input type="checkbox" aria-label="Select all on page" checked={allOnPage} onChange={() => setSelected(allOnPage ? new Set() : new Set(rows.map((r) => r.id)))} />
@@ -243,7 +243,7 @@ function LeadsPageInner() {
               {COLUMNS.map((c) => (
                 <th key={c.key} className={`whitespace-nowrap px-2 py-3 font-semibold ${c.cls ?? ""}`}>
                   {c.sort ? (
-                    <button className="inline-flex items-center gap-1 uppercase tracking-wide hover:text-navy" onClick={() => update({ sort: c.sort!, dir: sort === c.sort && dir === "desc" ? "asc" : "desc" }, false)}>
+                    <button className="inline-flex items-center gap-1 uppercase tracking-wide hover:text-white" onClick={() => update({ sort: c.sort!, dir: sort === c.sort && dir === "desc" ? "asc" : "desc" }, false)}>
                       {c.label}
                       <span className="text-[10px]">{sort === c.sort ? (dir === "asc" ? "▲" : "▼") : "↕"}</span>
                     </button>
@@ -252,28 +252,28 @@ function LeadsPageInner() {
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-sky-400/10">
             {loading && rows.length === 0 && Array.from({ length: 6 }).map((_, i) => (
-              <tr key={i}><td colSpan={COLUMNS.length + 1} className="px-3 py-3"><div className="h-5 animate-pulse rounded bg-slate-100" /></td></tr>
+              <tr key={i}><td colSpan={COLUMNS.length + 1} className="px-3 py-3"><div className="h-5 animate-pulse rounded bg-white/5" /></td></tr>
             ))}
             {rows.map((l) => (
-              <tr key={l.id} className={`hover:bg-slate-50 ${selected.has(l.id) ? "bg-brand-50" : ""}`}>
+              <tr key={l.id} className={`hover:bg-sky-400/5 ${selected.has(l.id) ? "bg-sky-400/10" : ""}`}>
                 <td className="px-2 py-2.5"><input type="checkbox" aria-label={`Select ${l.name}`} checked={selected.has(l.id)} onChange={() => toggle(l.id)} /></td>
                 <td className="min-w-[150px] max-w-[220px] px-2 py-2.5">
-                  <button className="text-left font-semibold text-navy hover:text-brand" onClick={() => setDrawer({ id: l.id })}>{l.name}</button>
-                  {l.notes && <div className="truncate text-xs text-slate-400" title={l.notes}>📝 {l.notes}</div>}
+                  <button className="text-left font-semibold text-white hover:text-sky-200" onClick={() => setDrawer({ id: l.id })}>{l.name}</button>
+                  {l.notes && <div className="truncate text-xs text-slate-500" title={l.notes}>📝 {l.notes}</div>}
                 </td>
-                <td className="max-w-[120px] px-2 py-2.5 text-slate-600"><div className="truncate" title={l.category ?? ""}>{l.category ?? nicheLabel(l.niche)}</div></td>
+                <td className="max-w-[120px] px-2 py-2.5 text-slate-300"><div className="truncate" title={l.category ?? ""}>{l.category ?? nicheLabel(l.niche)}</div></td>
                 <td className="whitespace-nowrap px-2 py-2.5 tabular-nums">
-                  {l.phoneE164 ? <a className="text-brand hover:underline" href={`tel:${l.phoneE164}`}>{l.phoneDisplay ?? l.phoneE164}</a> : <span className="text-slate-400">Phone Unavailable</span>}
+                  {l.phoneE164 ? <a className="text-sky-300 hover:underline" href={`tel:${l.phoneE164}`}>{l.phoneDisplay ?? l.phoneE164}</a> : <span className="text-slate-500">Phone Unavailable</span>}
                 </td>
-                <td className="max-w-[130px] px-2 py-2.5 text-slate-600"><div className="truncate" title={[l.locality, l.city].filter(Boolean).join(", ")}>{[l.locality, l.city].filter(Boolean).join(", ") || "—"}</div></td>
+                <td className="max-w-[130px] px-2 py-2.5 text-slate-300"><div className="truncate" title={[l.locality, l.city].filter(Boolean).join(", ")}>{[l.locality, l.city].filter(Boolean).join(", ") || "—"}</div></td>
                 <td className="px-2 py-2.5"><WebsiteBadge lead={l} /></td>
-                <td className="px-2 py-2.5">{l.instagramUrl ? <a className="text-brand hover:underline" target="_blank" rel="noreferrer" href={l.instagramUrl}>Open</a> : <span className="text-slate-300">—</span>}</td>
-                <td className="px-2 py-2.5">{l.profileUrl ? <a className="text-brand hover:underline" target="_blank" rel="noreferrer" href={l.profileUrl}>Open</a> : <span className="text-slate-300">—</span>}</td>
+                <td className="px-2 py-2.5">{l.instagramUrl ? <a className="text-sky-300 hover:underline" target="_blank" rel="noreferrer" href={l.instagramUrl}>Open</a> : <span className="text-slate-600">—</span>}</td>
+                <td className="px-2 py-2.5">{l.profileUrl ? <a className="text-sky-300 hover:underline" target="_blank" rel="noreferrer" href={l.profileUrl}>Open</a> : <span className="text-slate-600">—</span>}</td>
                 <td className="px-2 py-2.5"><QualityBadge score={l.qualityScore} /></td>
                 <td className="px-2 py-2.5"><StatusSelect className="max-w-[150px]" value={l.status} onChange={(s) => patchLead(l.id, { status: s })} /></td>
-                <td className="whitespace-nowrap px-2 py-2.5 text-slate-500">{fmtDate(l.createdAt)}</td>
+                <td className="whitespace-nowrap px-2 py-2.5 text-slate-400">{fmtDate(l.createdAt)}</td>
                 <td className="px-2 py-2.5"><RowActions lead={l} onCopy={copy} onDetails={(f) => setDrawer({ id: l.id, followUp: f })} onContacted={() => patchLead(l.id, { status: "contacted" })} /></td>
               </tr>
             ))}
@@ -285,27 +285,27 @@ function LeadsPageInner() {
       {/* Mobile cards */}
       <div className="space-y-3 lg:hidden">
         {rows.length > 0 && (
-          <label className="flex items-center gap-2 px-1 text-sm text-slate-600">
+          <label className="flex items-center gap-2 px-1 text-sm text-slate-300">
             <input type="checkbox" checked={allOnPage} onChange={() => setSelected(allOnPage ? new Set() : new Set(rows.map((r) => r.id)))} /> Select all on this page
           </label>
         )}
         {rows.map((l) => (
-          <div key={l.id} className={`card p-4 ${selected.has(l.id) ? "ring-2 ring-brand" : ""}`}>
+          <div key={l.id} className={`card p-4 ${selected.has(l.id) ? "ring-2 ring-sky-400" : ""}`}>
             <div className="flex items-start gap-3">
               <input type="checkbox" className="mt-1" aria-label={`Select ${l.name}`} checked={selected.has(l.id)} onChange={() => toggle(l.id)} />
               <div className="min-w-0 flex-1">
-                <button className="text-left font-semibold text-navy" onClick={() => setDrawer({ id: l.id })}>{l.name}</button>
-                <p className="truncate text-xs text-slate-500">{[l.category ?? (l.niche ? nicheLabel(l.niche) : null), [l.locality, l.city].filter(Boolean).join(", ")].filter(Boolean).join(" · ")}</p>
+                <button className="text-left font-semibold text-white" onClick={() => setDrawer({ id: l.id })}>{l.name}</button>
+                <p className="truncate text-xs text-slate-400">{[l.category ?? (l.niche ? nicheLabel(l.niche) : null), [l.locality, l.city].filter(Boolean).join(", ")].filter(Boolean).join(" · ")}</p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   <WebsiteBadge lead={l} />
                   <QualityBadge score={l.qualityScore} />
                   <StatusSelect value={l.status} onChange={(s) => patchLead(l.id, { status: s })} />
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {l.phoneE164 ? <a className="btn-primary py-1.5" href={`tel:${l.phoneE164}`}>Call {l.phoneDisplay}</a> : <span className="text-xs text-slate-400">Phone Unavailable</span>}
+                  {l.phoneE164 ? <a className="btn-primary py-1.5" href={`tel:${l.phoneE164}`}>Call {l.phoneDisplay}</a> : <span className="text-xs text-slate-500">Phone Unavailable</span>}
                   <RowActions lead={l} onCopy={copy} onDetails={(f) => setDrawer({ id: l.id, followUp: f })} onContacted={() => patchLead(l.id, { status: "contacted" })} />
                 </div>
-                <p className="mt-2 text-[11px] text-slate-400">Found {fmtDate(l.createdAt)}</p>
+                <p className="mt-2 text-[11px] text-slate-500">Found {fmtDate(l.createdAt)}</p>
               </div>
             </div>
           </div>
@@ -315,7 +315,7 @@ function LeadsPageInner() {
 
       {/* Pagination */}
       {total > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-300">
           <div className="flex items-center gap-2">
             Rows per page
             <select className="input w-auto py-1" value={pageSize} onChange={(e) => update({ pageSize: e.target.value }, true)}>
@@ -332,7 +332,7 @@ function LeadsPageInner() {
 
       {drawer && <LeadDrawer leadId={drawer.id} focusFollowUp={drawer.followUp} onClose={() => setDrawer(null)} onChange={(l) => setRows((rs) => rs.map((r) => (r.id === l.id ? l : r)))} />}
       {importing && <ImportDialog onClose={() => setImporting(false)} onDone={load} />}
-      {toast && <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-navy px-4 py-2 text-sm text-white shadow-lg">{toast}</div>}
+      {toast && <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-ink-700 px-4 py-2 text-sm text-white shadow-lg">{toast}</div>}
     </div>
   );
 
@@ -354,7 +354,7 @@ function RowActions({ lead, onCopy, onDetails, onContacted }: { lead: LeadDTO; o
       {open && (
         <>
           <button className="fixed inset-0 z-10 cursor-default" aria-label="Close menu" onClick={() => setOpen(false)} />
-          <div role="menu" className="absolute right-0 top-full z-20 mt-1 w-52 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-sm shadow-lg" onClick={() => setOpen(false)}>
+          <div role="menu" className="absolute right-0 top-full z-20 mt-1 w-52 overflow-hidden rounded-lg border border-sky-400/15 bg-ink-800 py-1 text-sm shadow-lg" onClick={() => setOpen(false)}>
             {lead.phoneE164 && <MenuLink href={`tel:${lead.phoneE164}`}>📞 Call</MenuLink>}
             {lead.instagramUrl && <MenuLink href={lead.instagramUrl} external>📷 Open Instagram</MenuLink>}
             {lead.profileUrl && <MenuLink href={lead.profileUrl} external>📍 Open business profile</MenuLink>}
@@ -371,10 +371,10 @@ function RowActions({ lead, onCopy, onDetails, onContacted }: { lead: LeadDTO; o
 }
 
 const MenuLink = ({ href, external, children }: { href: string; external?: boolean; children: React.ReactNode }) => (
-  <a role="menuitem" href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} className="block px-3 py-2 text-slate-700 hover:bg-slate-50">{children}</a>
+  <a role="menuitem" href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} className="block px-3 py-2 text-slate-200 hover:bg-sky-400/5">{children}</a>
 );
 const MenuBtn = ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => (
-  <button role="menuitem" onClick={onClick} className="block w-full px-3 py-2 text-left text-slate-700 hover:bg-slate-50">{children}</button>
+  <button role="menuitem" onClick={onClick} className="block w-full px-3 py-2 text-left text-slate-200 hover:bg-sky-400/5">{children}</button>
 );
 
 function ExportMenu({ urls, count }: { urls: (s: "filtered" | "eligible" | "all") => string; count: number }) {
@@ -385,16 +385,16 @@ function ExportMenu({ urls, count }: { urls: (s: "filtered" | "eligible" | "all"
       {open && (
         <>
           <button className="fixed inset-0 z-10 cursor-default" aria-label="Close menu" onClick={() => setOpen(false)} />
-          <div role="menu" className="absolute right-0 top-full z-20 mt-1 w-72 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 text-sm shadow-lg" onClick={() => setOpen(false)}>
-            <MenuLink href={urls("filtered")}><strong>Filtered view</strong><span className="block text-xs text-slate-500">The {count.toLocaleString("en-IN")} leads matching current filters</span></MenuLink>
-            <MenuLink href={urls("eligible")}><strong>All eligible leads</strong><span className="block text-xs text-slate-500">Every lead with a phone number and no listed website</span></MenuLink>
+          <div role="menu" className="absolute right-0 top-full z-20 mt-1 w-72 overflow-hidden rounded-lg border border-sky-400/15 bg-ink-800 py-1 text-sm shadow-lg" onClick={() => setOpen(false)}>
+            <MenuLink href={urls("filtered")}><strong>Filtered view</strong><span className="block text-xs text-slate-400">The {count.toLocaleString("en-IN")} leads matching current filters</span></MenuLink>
+            <MenuLink href={urls("eligible")}><strong>All eligible leads</strong><span className="block text-xs text-slate-400">Every lead with a phone number and no listed website</span></MenuLink>
             <a
               role="menuitem"
               href={urls("all")}
-              className="block px-3 py-2 text-slate-700 hover:bg-slate-50"
+              className="block px-3 py-2 text-slate-200 hover:bg-sky-400/5"
               onClick={(e) => { if (!window.confirm("Export ALL leads, including ones with websites or without phone numbers?")) e.preventDefault(); }}
             >
-              <strong>Everything</strong><span className="block text-xs text-slate-500">All leads, ignoring filters</span>
+              <strong>Everything</strong><span className="block text-xs text-slate-400">All leads, ignoring filters</span>
             </a>
           </div>
         </>
@@ -417,8 +417,8 @@ function Sel({ id, label, value, onChange, options }: { id: string; label: strin
 function Empty({ isPrimary }: { isPrimary: boolean }) {
   return (
     <div className="px-6 py-12 text-center">
-      <p className="font-semibold text-navy">No leads match these filters.</p>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="font-semibold text-white">No leads match these filters.</p>
+      <p className="mt-1 text-sm text-slate-400">
         {isPrimary ? "Run a search on the Find Leads page to collect businesses without websites." : "Try relaxing the filters."}
       </p>
       <a href="/" className="btn-primary mt-4">Find Leads</a>
@@ -428,7 +428,7 @@ function Empty({ isPrimary }: { isPrimary: boolean }) {
 
 export default function LeadsPage() {
   return (
-    <Suspense fallback={<div className="card p-8 text-center text-sm text-slate-500">Loading leads…</div>}>
+    <Suspense fallback={<div className="card p-8 text-center text-sm text-slate-400">Loading leads…</div>}>
       <LeadsPageInner />
     </Suspense>
   );

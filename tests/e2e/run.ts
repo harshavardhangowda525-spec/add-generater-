@@ -93,7 +93,7 @@ async function waitForJob(page: Page, sql: postgres.Sql, n: number, statuses: Re
     if (latest.c === n && latest.s !== "running") break;
     await new Promise((r) => setTimeout(r, 500));
   }
-  await page.locator("[aria-live=polite]").getByText(statuses).first().waitFor({ timeout: 15000 });
+  await page.getByTestId("job-mini").getByText(statuses).first().waitFor({ timeout: 15000 });
 }
 
 async function main() {
@@ -129,10 +129,20 @@ async function main() {
     await page.fill("#target", "100");
     await page.getByRole("button", { name: "Find Leads" }).click();
     await waitForJob(page, sql, 1, /Target reached|No more results|Provider limit|Failed/);
-    const progressText = await page.locator("[aria-live=polite]").innerText();
-    check("1. search for 100 collects 100 eligible leads", /Target reached/.test(progressText) && /100\s+of 100 requested/.test(progressText), progressText.split("\n").slice(0, 3).join(" | "));
-    check("9. provider failures shown honestly in the activity log", /Geoapify/.test(progressText), "Geoapify (unreachable here) error appears in log");
+    const progressText = await page.getByTestId("job-mini").innerText();
+    check("1. search for 100 collects 100 eligible leads", /Target reached/.test(progressText) && /100\s*\/\s*100/.test(progressText), progressText.split("\n").slice(0, 2).join(" | "));
+    const [firstJob] = await sql`select log from search_jobs order by created_at limit 1`;
+    check("9. provider failures recorded honestly in the job log", JSON.stringify(firstJob.log).includes("Geoapify"), "Geoapify (unreachable here) error is logged");
+    // Stats cards and the dashboard table update from the database.
+    await page.getByText("Lead Table").waitFor();
+    const statsText = await page.locator(".card-glow").filter({ hasText: "Total Leads" }).innerText();
+    check("dashboard stat cards show real totals", /100/.test(statsText), statsText.replace(/\n/g, " "));
+    await page.locator("tbody tr").filter({ hasText: "Test Fitness" }).first().click();
+    await page.getByRole("heading", { name: "CRM Notes" }).waitFor();
+    check("dashboard: clicking a row opens the docked details panel", (await page.getByText(/No website listed in OpenStreetMap data/).count()) > 0);
     await page.screenshot({ path: `${OUT}/01-find-leads-desktop.png`, fullPage: true });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: `${OUT}/00-dashboard-viewport.png` });
 
     // ── 2/3/4. DB contents ─────────────────────────────────────
     const rows = await sql`select phone_e164, website_status, source, website_evidence from leads`;
@@ -144,12 +154,13 @@ async function main() {
     await page.fill("#target", "100");
     await page.getByRole("button", { name: "Find Leads" }).click();
     await waitForJob(page, sql, 2, /Target reached|No more results|Provider limit|Failed/);
-    const second = await page.locator("[aria-live=polite]").innerText();
+    const second = await page.getByTestId("job-mini").innerText();
     const totalLeads = (await sql`select count(*)::int c from leads`)[0].c;
     const uniquePhones = (await sql`select count(distinct phone_e164)::int c from leads`)[0].c;
     check("5. repeated search creates no duplicate records", totalLeads === uniquePhones && totalLeads === 144, `${totalLeads} leads, ${uniquePhones} unique phones`);
     check("10. fewer-than-requested is reported", /Only 44 of 100 matching leads found/.test(second), second.match(/Only[^\n]+/)?.[0]);
-    check("6. pagination across search areas", /16\/16 areas|all\/16 areas/.test(second));
+    const [secondJob] = await sql`select cursor from search_jobs order by created_at desc limit 1`;
+    check("6. pagination across search areas", secondJob.cursor.providers.osm.done === true && secondJob.cursor.tiles.length === 16, "all 16 areas covered");
 
     // ── Leads CRM ──────────────────────────────────────────────
     await page.goto(`${BASE}/leads`);
@@ -166,7 +177,8 @@ async function main() {
     const firstRow = page.locator("tbody tr").first();
     await firstRow.getByLabel("Lead status").selectOption("interested");
     await page.waitForTimeout(500);
-    await page.getByRole("button", { name: "Log out" }).click();
+    await page.getByRole("button", { name: "Account menu" }).click();
+    await page.getByRole("menuitem", { name: "Log out" }).click();
     await page.waitForURL(/login/);
     await page.fill("#email", "owner@infinitywebapps.test");
     await page.fill("#password", "correct-horse-battery");
@@ -215,8 +227,9 @@ async function main() {
     await page.fill("#target", "20");
     await page.getByRole("button", { name: "Find Leads" }).click();
     await waitForJob(page, sql, 3, /Provider limit|No more results|Failed/);
-    const limitText = await page.locator("[aria-live=polite]").innerText();
-    check("9. rate limits shown honestly with resume option", /Provider limit/.test(limitText) && /HTTP 429/.test(limitText) && /Resume/.test(limitText), limitText.match(/Stopped[^\n]+/)?.[0]);
+    const limitText = await page.getByTestId("job-mini").innerText();
+    const [limitedJob] = await sql`select log from search_jobs order by created_at desc limit 1`;
+    check("9. rate limits shown honestly with resume option", /Provider limit/.test(limitText) && /Stopped at 0 of 20/.test(limitText) && /Resume/.test(limitText) && JSON.stringify(limitedJob.log).includes("HTTP 429"), limitText.match(/Stopped[^\n]+/)?.[0]);
     await page.screenshot({ path: `${OUT}/03-rate-limit.png`, fullPage: true });
     mock.setMode("ok");
 
@@ -237,7 +250,7 @@ async function main() {
     // Detail drawer
     await page.goto(`${BASE}/leads`);
     await page.locator("tbody tr").first().getByRole("button").first().click();
-    await page.getByText("Website evidence").waitFor();
+    await page.getByRole("heading", { name: "Website Status" }).waitFor();
     await page.screenshot({ path: `${OUT}/06-lead-details.png` });
     check("lead detail drawer shows website evidence", (await page.getByText(/No website listed in (OpenStreetMap|imported CSV) data/).count()) > 0);
   } finally {

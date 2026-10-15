@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #090909;
+  --color-graphite: #171717;
+  --color-line: #2a2a2a;
+  --color-paper: #f3f3f0;
+  --color-cool: #929292;
+  --color-signal: #e23d35;
+  --color-signal-dark: #b8302a;
+
+  --font-display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  body {
+    @apply bg-ink font-sans text-white antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    font-weight: 400;
+  }
+  .eyebrow {
+    @apply text-[0.7rem] font-semibold uppercase tracking-[0.28em];
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-8 lg:px-14;
+  }
+  /* Animated underline for text CTAs */
+  .cta-line {
+    position: relative;
+  }
+  .cta-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0.35);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out-expo), background-color 0.3s;
+  }
+  .cta-line:hover::after,
+  .cta-line:focus-visible::after {
+    transform: scaleX(1);
+    background: var(--color-signal);
+  }
+  /* Film grain overlay */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .field {
+    @apply w-full border-0 border-b border-white/25 bg-transparent px-0 py-3 text-base text-white placeholder:text-white/35 transition-colors focus:border-white focus:outline-none;
+  }
+  .field[aria-invalid='true'] {
+    @apply border-signal;
+  }
+  select.field option {
+    color: #090909;
+  }
+}

@@ -18,6 +18,8 @@ websites → require phone numbers → save to CRM → export → contact.
   number never enter the main list. Numbers are shown as the provider published them and have **not** been checked by a
   live call.
 
+> **Also in this repo:** [`sites/outfitx-hsr/`](sites/outfitx-hsr/README.md) — a standalone client website (OUTFIT X HSR gym proposal), built and deployed separately from the Lead Finder.
+
 ---
 
 ## Quick start

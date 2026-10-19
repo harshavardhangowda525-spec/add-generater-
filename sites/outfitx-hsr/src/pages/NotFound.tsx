@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { usePageTitle } from '../components/ScrollManager';
 
 export function NotFound() {
-  usePageTitle('Page not found | OUTFIT X HSR');
+  usePageTitle('Page not found | RK Fitness Center-Gym');
   return (
     <section className="flex min-h-[80svh] items-center bg-ink pt-24">
       <div className="container-x">

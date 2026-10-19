@@ -26,7 +26,7 @@ export function Gallery() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <SectionIndex n="05" label="The space" />
-            <MaskHeadline id="gallery-title" lines={['Inside', <>OUTFIT X<span className="text-signal">.</span></>]} className="mt-10 text-[clamp(3.4rem,10vw,8rem)] text-white" />
+            <MaskHeadline id="gallery-title" lines={['Inside', <>RK Fitness<span className="text-signal">.</span></>]} className="mt-10 text-[clamp(3.4rem,10vw,8rem)] text-white" />
           </div>
           <Reveal className="max-w-sm space-y-4">
             {allDemo && <PendingBadge>Demonstration images · real photos to follow</PendingBadge>}

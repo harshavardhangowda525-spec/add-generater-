@@ -85,7 +85,7 @@ export function Hero() {
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 1.3 }}
-          className="eyebrow text-white/60"
+          className="eyebrow pr-20 leading-relaxed text-white/60 sm:pr-0"
         >
           {business.name} · {business.city}
         </motion.p>

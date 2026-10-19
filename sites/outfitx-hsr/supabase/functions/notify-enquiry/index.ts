@@ -5,7 +5,7 @@
 // never exposed to the browser:
 //   RESEND_API_KEY        — https://resend.com API key
 //   NOTIFY_TO             — comma-separated staff email addresses
-//   NOTIFY_FROM           — verified sender, e.g. "OUTFIT X Website <enquiries@yourdomain.com>"
+//   NOTIFY_FROM           — verified sender, e.g. "RK Fitness Website <enquiries@yourdomain.com>"
 //   WEBHOOK_SECRET        — shared secret, sent by the webhook as the x-webhook-secret header
 
 type Enquiry = {

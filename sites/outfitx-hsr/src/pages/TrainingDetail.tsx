@@ -10,7 +10,7 @@ export function TrainingDetail() {
   const { slug } = useParams();
   const enquire = useEnquire();
   const option = trainingOptions.find((o) => o.slug === slug && isVisible(o));
-  usePageTitle(option ? `${option.title} | OUTFIT X HSR, Bengaluru` : 'Page not found | OUTFIT X HSR', option?.summary);
+  usePageTitle(option ? `${option.title} | RK Fitness Center-Gym, Bengaluru` : 'Page not found | RK Fitness Center-Gym', option?.summary);
   if (!option) return <NotFound />;
 
   const others = trainingOptions.filter((o) => o.slug !== option.slug && isVisible(o));

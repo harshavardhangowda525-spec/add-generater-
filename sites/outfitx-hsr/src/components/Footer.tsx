@@ -57,7 +57,7 @@ export function Footer() {
       </div>
 
       <p aria-hidden className="display pointer-events-none -mb-[0.18em] select-none whitespace-nowrap text-center text-[23vw] leading-none text-white/[0.04]">
-        OUTFIT X
+        RK Fitness
       </p>
     </footer>
   );

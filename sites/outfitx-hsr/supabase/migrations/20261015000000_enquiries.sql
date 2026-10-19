@@ -1,4 +1,4 @@
--- OUTFIT X HSR — membership enquiries
+-- RK Fitness Center-Gym — membership enquiries
 -- Public visitors (anon role) may INSERT an enquiry and nothing else.
 -- Only signed-in users listed in public.enquiry_staff may read or update them.
 

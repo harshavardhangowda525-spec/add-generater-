@@ -23,7 +23,7 @@ export function Training() {
 
         {options.length === 0 ? (
           <Reveal className="mt-16 border-t border-ink/15 pt-10">
-            <p className="max-w-xl text-lg text-ink/75">Talk to the OUTFIT X team about the training options that suit you.</p>
+            <p className="max-w-xl text-lg text-ink/75">Talk to the RK Fitness team about the training options that suit you.</p>
             <button type="button" onClick={() => enquire('membership')} className="cta-line eyebrow mt-8 py-2">
               Ask about training options
             </button>

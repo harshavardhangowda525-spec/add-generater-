@@ -38,7 +38,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
       <p>
         You can ask us to show, correct or delete the information we hold about you, or to stop contacting you, at any time. Call us on{' '}
         <a href={telLink} className="underline underline-offset-2">{business.phoneDisplay}</a> or{' '}
-        <a href={whatsappLink('Hi OUTFIT X HSR team, I have a question about my enquiry data.')} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">message us on WhatsApp</a>.
+        <a href={whatsappLink('Hi RK Fitness Center-Gym team, I have a question about my enquiry data.')} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">message us on WhatsApp</a>.
       </p>
     ),
   },
@@ -53,7 +53,7 @@ const sections: { h: string; body: React.ReactNode }[] = [
 ];
 
 export function Privacy() {
-  usePageTitle('Privacy policy | OUTFIT X HSR', `How ${business.name} handles the information you share through enquiries.`);
+  usePageTitle('Privacy policy | RK Fitness Center-Gym', `How ${business.name} handles the information you share through enquiries.`);
   return (
     <article className="bg-paper pb-24 pt-32 text-ink lg:pt-40">
       <div className="container-x max-w-3xl">

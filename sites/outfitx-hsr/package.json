@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "OUTFIT X HSR — website proposal by Infinity Web & Apps",
+  "description": "RK Fitness Center-Gym — website proposal by Infinity Web & Apps",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

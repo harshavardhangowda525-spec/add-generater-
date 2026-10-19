@@ -1,5 +1,5 @@
 /**
- * OUTFIT X HSR — central site configuration.
+ * RK Fitness Center-Gym — central site configuration.
  *
  * Everything the gym owner may want to change lives here: contact details,
  * hours, training options, coaches, gallery images and review figures.
@@ -20,8 +20,8 @@ export function isVisible(item: { confirmed: boolean }): boolean {
 // ── Business ────────────────────────────────────────────────────────
 
 export const business = {
-  name: 'OUTFIT X HSR',
-  wordmark: 'OUTFIT X',
+  name: 'RK Fitness Center-Gym',
+  wordmark: 'RK Fitness',
   locality: 'HSR Layout',
   city: 'Bengaluru',
   category: 'Gym',
@@ -32,7 +32,7 @@ export const business = {
   /** Digits only, used for wa.me links. */
   whatsappDigits: '917624886713',
   whatsappMessage:
-    "Hi OUTFIT X HSR team! I'm interested in learning more about your training options and membership. Could you please share the details?",
+    "Hi RK Fitness Center-Gym team! I'm interested in learning more about your training options and membership. Could you please share the details?",
   existingWebsite: 'https://theoutfitx.com',
   address: {
     lines: ['4th Floor, 1791, 19th Main Road', 'Vanganahalli, 1st Sector, HSR Layout', 'Bengaluru, Karnataka 560102'],
@@ -42,9 +42,9 @@ export const business = {
     postalCode: '560102',
     country: 'IN',
   },
-  /** Exact address used as the map / directions destination. */
+  /** Exact address used as the map / directions destination (address only, so Maps resolves it reliably). */
   mapQuery:
-    'OUTFIT X HSR, 4th Floor, 1791, 19th Main Road, Vanganahalli, 1st Sector, HSR Layout, Bengaluru, Karnataka 560102',
+    '4th Floor, 1791, 19th Main Road, Vanganahalli, 1st Sector, HSR Layout, Bengaluru, Karnataka 560102',
 } as const;
 
 // ── Reviews ─────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ export const hours = {
 export type SiteImage = {
   src: string;
   alt: string;
-  /** true = an actual photograph of OUTFIT X supplied by the owner. */
+  /** true = an actual photograph of RK Fitness supplied by the owner. */
   isRealFacility: boolean;
   width: number;
   height: number;
@@ -111,7 +111,7 @@ const demo = (src: string, alt: string, width: number, height: number): SiteImag
 
 /**
  * All imagery used on the site. These are AI-generated demonstration images,
- * NOT photographs of OUTFIT X. Replace each with the owner's real photos and
+ * NOT photographs of RK Fitness. Replace each with the owner's real photos and
  * set isRealFacility: true so the "Demonstration image" label disappears.
  */
 export const images = {
@@ -157,7 +157,7 @@ export const trainingOptions: TrainingOption[] = [
     title: 'Strength Training',
     summary: 'Build strength through sound technique, consistent work and sensible progression.',
     details: [
-      'Strength training at OUTFIT X centres on doing the fundamentals well: controlled movement, good positions and steady progress over time.',
+      'Strength training at RK Fitness centres on doing the fundamentals well: controlled movement, good positions and steady progress over time.',
       'Whether you are new to lifting or returning to it, the focus is on building a foundation you can keep developing.',
     ],
     points: ['Technique before load', 'Progression planned around you', 'Consistency over intensity for its own sake'],
@@ -170,7 +170,7 @@ export const trainingOptions: TrainingOption[] = [
     title: 'Personalised Coaching',
     summary: 'Training that takes your goals, experience and movement into account.',
     details: [
-      'Members who have reviewed OUTFIT X mention personalised workouts and attentive, patient coaching.',
+      'Members who have reviewed RK Fitness mention personalised workouts and attentive, patient coaching.',
       'Talk to the team about how coaching can be tailored to what you are working towards.',
     ],
     points: ['Starts with your goals', 'Exercise selection that suits you', 'Attention to form, rep by rep'],

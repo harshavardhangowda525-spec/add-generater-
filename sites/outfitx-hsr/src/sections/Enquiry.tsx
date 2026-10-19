@@ -106,7 +106,7 @@ export function Enquiry() {
           <MaskHeadline id="enquire-title" lines={['Ready to', 'train with', <>intent<span className="text-signal">?</span></>]} className="mt-10 text-[clamp(3.2rem,9vw,7rem)] text-white" />
           <Reveal>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-white/70">
-              Tell us what you're working towards. Connect with the OUTFIT X team to explore your training options.
+              Tell us what you're working towards. Connect with the RK Fitness team to explore your training options.
             </p>
             <div className="mt-10 space-y-3 border-t border-white/10 pt-8 text-white/70">
               <p className="eyebrow text-white/45">Prefer to talk now?</p>
@@ -138,7 +138,7 @@ export function Enquiry() {
                 </span>
                 <h3 className="display mt-8 text-5xl text-white">Enquiry received.</h3>
                 <p className="mt-5 text-lg leading-relaxed text-white/70">
-                  Thanks, {values.fullName.trim().split(/\s+/)[0]}. Your enquiry has been saved and the OUTFIT X team will contact you by{' '}
+                  Thanks, {values.fullName.trim().split(/\s+/)[0]}. Your enquiry has been saved and the RK Fitness team will contact you by{' '}
                   {contactMethods.find((m) => m.value === values.contactMethod)?.label.toLowerCase()}.
                 </p>
               </motion.div>
@@ -235,7 +235,7 @@ export function Enquiry() {
                       aria-describedby={[errors.consent ? `${id('consent')}-error` : '', `${uid}-privacy`].filter(Boolean).join(' ')}
                     />
                     <span className="text-sm leading-relaxed text-white/70">
-                      I agree to be contacted by OUTFIT X HSR about my enquiry by my preferred contact method.
+                      I agree to be contacted by RK Fitness Center-Gym about my enquiry by my preferred contact method.
                     </span>
                   </label>
                   <p id={`${uid}-privacy`} className="ml-9 mt-2 text-xs text-white/45">

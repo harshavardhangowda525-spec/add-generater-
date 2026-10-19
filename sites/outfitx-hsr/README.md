@@ -1,6 +1,6 @@
-# OUTFIT X HSR — website
+# RK Fitness Center-Gym — website
 
-Website proposal for **OUTFIT X HSR**, a gym in HSR Layout, Bengaluru, by **Infinity Web & Apps**.
+Website proposal for **RK Fitness Center-Gym**, a gym in HSR Layout, Bengaluru, by **Infinity Web & Apps**.
 
 Stack: React 19, TypeScript, Vite, Tailwind CSS 4, Framer Motion, Lucide icons. Enquiries are stored in **Supabase**,
 and staff are notified by email through a Supabase Edge Function.
@@ -77,7 +77,7 @@ only once the owner supplies them.
 ### Replacing images
 
 The current images are **AI-generated demonstration images**, made in the Floot project "OUTFIT X HSR Images". They
-are **not** photographs of the OUTFIT X facility, and each one carries a visible *Demonstration image* label.
+are **not** photographs of the RK Fitness facility, and each one carries a visible *Demonstration image* label.
 
 To use the owner's photos:
 
@@ -129,7 +129,7 @@ fallbacks, and what they typed is kept.
 supabase functions deploy notify-enquiry --no-verify-jwt
 supabase secrets set RESEND_API_KEY=re_xxx \
   NOTIFY_TO=owner@example.com,coach@example.com \
-  NOTIFY_FROM="OUTFIT X Website <enquiries@your-verified-domain.com>" \
+  NOTIFY_FROM="RK Fitness Website <enquiries@your-verified-domain.com>" \
   WEBHOOK_SECRET=$(openssl rand -hex 24)
 ```
 

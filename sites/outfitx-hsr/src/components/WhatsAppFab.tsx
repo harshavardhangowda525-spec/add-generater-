@@ -7,7 +7,7 @@ export function WhatsAppFab() {
       href={whatsappLink()}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with OUTFIT X HSR on WhatsApp (opens in a new tab)"
+      aria-label="Chat with RK Fitness Center-Gym on WhatsApp (opens in a new tab)"
       className="group fixed bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:scale-105 active:scale-95 sm:bottom-6 sm:right-6"
       style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
     >

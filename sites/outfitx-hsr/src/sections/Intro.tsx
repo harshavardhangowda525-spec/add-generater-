@@ -20,7 +20,7 @@ export function Intro() {
                 Every session should have a purpose. Build strength, improve movement, and develop better training habits through a focused approach that puts technique and individual needs at the centre.
               </p>
               <a href="#philosophy" className="cta-line eyebrow mt-10 inline-flex items-center gap-3 py-2 text-ink">
-                Discover OUTFIT X <ArrowRight size={14} />
+                Discover RK Fitness <ArrowRight size={14} />
               </a>
             </Reveal>
           </div>

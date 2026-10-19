@@ -268,7 +268,7 @@ await check('reduced motion: content is visible without animation', async () => 
 await check('SEO: title, description, structured data, single h1', async () => {
   const { ctx, page } = await newPage(VIEWPORTS[3]);
   await page.goto(BASE, { waitUntil: 'networkidle' });
-  assert((await page.title()) === 'OUTFIT X HSR | Strength Training & Fitness in Bengaluru', 'title');
+  assert((await page.title()) === 'RK Fitness Center-Gym | Strength Training & Fitness in Bengaluru', 'title');
   const ld = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
   assert(ld['@type'] === 'ExerciseGym' && !ld.aggregateRating && !ld.openingHours, 'structured data must not contain unconfirmed claims');
   assert((await page.locator('h1').count()) === 1, 'expected exactly one h1');

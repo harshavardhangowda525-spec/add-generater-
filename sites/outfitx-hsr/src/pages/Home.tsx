@@ -10,9 +10,9 @@ import { Location } from '../sections/Location';
 import { Contact } from '../sections/Contact';
 import { usePageTitle } from '../components/ScrollManager';
 
-export const HOME_TITLE = 'OUTFIT X HSR | Strength Training & Fitness in Bengaluru';
+export const HOME_TITLE = 'RK Fitness Center-Gym | Strength Training & Fitness in Bengaluru';
 export const HOME_DESCRIPTION =
-  "Explore OUTFIT X HSR in HSR Layout, Bengaluru. Learn about the gym's training approach, discover fitness options, and enquire about membership.";
+  "Explore RK Fitness Center-Gym in HSR Layout, Bengaluru. Learn about the gym's training approach, discover fitness options, and enquire about membership.";
 
 export function Home() {
   usePageTitle(HOME_TITLE, HOME_DESCRIPTION);
